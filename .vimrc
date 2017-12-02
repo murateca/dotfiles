@@ -31,6 +31,9 @@ set number
 set rnu
 highlight LineNr ctermfg=grey 
 
+"esc delay off
+set timeoutlen=1000 ttimeoutlen=0
+
 "Ruler
 set ruler
 
@@ -79,3 +82,7 @@ if has('gui_running')
 	set background=dark
 	set guifont=Consolas
 endif
+
+"Cursor settings
+au InsertEnter * silent execute "!echo -en \<esc>[5 q"
+au InsertLeave * silent execute "!echo -en \<esc>[2 q"
