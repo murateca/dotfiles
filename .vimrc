@@ -1,14 +1,21 @@
 "----------------------------------------------------------
-"----------------------Pathogen----------------------------
+"------------------------ vim-plug ------------------------
 "----------------------------------------------------------
-execute pathogen#infect()
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'scrooloose/nerdtree'
+
+Plug 'itchyny/lightline.vim'
+
+call plug#end()
 
 "---Plugin Settings---
 "---------------------
-"
+
 "-Nerdtree
 map <C-n> :NERDTreeToggle<CR>
-"
+
 "-Lighline
 set laststatus=2
 set noshowmode
@@ -20,6 +27,7 @@ let g:lightline = {
 			\ 'separator': { 'left': '', 'right': '' },
 			\ 'subseparator': { 'left': '|', 'right': '|' }
 			\ }
+
 "----------------------------------------------------------
 "----------------------------------------------------------
 
