@@ -8,4 +8,4 @@ readonly VIM_PLUG_URI=https://raw.githubusercontent.com/junegunn/vim-plug/master
 mkdir -p $AUTOLOAD_PATH
 \curl -fLo $AUTOLOAD_PATH/plug.vim $VIM_PLUG_URI
 cp .vimrc $HOME
-vim +PlugInstall
+vim +PlugInstall +qall
