@@ -1,5 +1,12 @@
 "Runtime
-set runtimepath+=$USERPROFILE/.vim
+set runtimepath+=~/.vim
+
+"Auto commands
+autocmd!
+autocmd FileType nerdtree setlocal laststatus=0
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd FileType help wincmd L
+autocmd BufWinLeave * setlocal laststatus=2
 
 "----------------------------------------------------------
 "------------------------ vim-plug ------------------------
@@ -11,25 +18,59 @@ Plug 'scrooloose/nerdtree'
 
 Plug 'itchyny/lightline.vim'
 
+Plug 'tpope/vim-surround'
+
+Plug 'nanotech/jellybeans.vim', { 'tag': 'v1.6' }
+
+Plug 'tomasr/molokai'
+
 call plug#end()
 
 "---Plugin Settings---
 "---------------------
 
 "-Nerdtree
-map <C-n> :NERDTreeToggle<CR>
+map <silent> <C-n> :NERDTreeToggle<CR>
+map <silent> <F3> :NERDTreeFind<CR>
+let g:NERDTreeMapActivateNode="<F3>"
+let g:NERDTreeMapPreview="<F4>"
+let NERDTreeQuitOnOpen=1
+let NERDTreeShowHidden=1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDTreeAutoDeleteBuffer = 1
 
 "-Lighline
 set laststatus=2
 set noshowmode
 let g:lightline = {
-			\ 'colorscheme': 'wombat',
-			\ 'component': {
-			\   'readonly': '%{&readonly?"x":""}',
-			\ },
-			\ 'separator': { 'left': '', 'right': '' },
-			\ 'subseparator': { 'left': '|', 'right': '|' }
-			\ }
+\	'active': {
+\		'left': [ 
+\			[ 'mode', 'paste' ],
+\           [  'absolutepath', 'readonly', 'modified' ],
+\			],
+\		'right': [ 
+\			[ 'lineinfo' ],
+\           [ 'percent' ],
+\           [ 'filetype', 'fileencoding', 'fileformat', 'charvaluehex'] 
+\			]
+\	},
+\	'tab': {
+\		'active': [ 'tabnum', 'filename', 'modified' ],
+\		'inactive': [ 'tabnum', 'filename', 'modified' ] 
+\	},
+\	'component': {
+\		'readonly': '%{&readonly?"\u26bf":""}',
+\		'modified': '%{&modified?"\u2630":""}',
+\		'charvaluehex': 'Hex:0x%B'
+\	},
+\	'separator': { 'left': '', 'right': '' },
+\	'subseparator': { 'left': '|', 'right': '|'}, 
+\	'colorscheme': 'default'
+\}
+
+"-Jellybeans
+colorscheme jellybeans
 
 "----------------------------------------------------------
 "----------------------------------------------------------
@@ -42,11 +83,8 @@ set number
 set rnu
 highlight LineNr ctermfg=grey 
 
-"esc delay off
+"Esc delay off
 set timeoutlen=1000 ttimeoutlen=0
-
-"Ruler
-set ruler
 
 "Tab Settings
 set tabstop=4
@@ -82,8 +120,11 @@ set noswapfile
 set fileformats=unix,dos,mac
 set showcmd
 
+"Run as Python3 code on Linux
+nnoremap <silent> <F5> :w<CR>:!clear;python3 %<CR>
+
 "Run as Python code on Windows
-nnoremap <silent> <F5> :w<CR>:!cls&python %<CR>
+"nnoremap <silent> <F5> :w<CR>:!cls&python %<CR>
 
 "gvim settings
 if has('gui_running')
@@ -97,3 +138,6 @@ endif
 "Cursor settings
 au InsertEnter * silent execute "!echo -en \<esc>[5 q"
 au InsertLeave * silent execute "!echo -en \<esc>[2 q"
+
+"Mappings
+cno $h e ~/
