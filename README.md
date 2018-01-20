@@ -16,3 +16,13 @@ File system explorer plugin. One of the most essential plugin for vim
 
 ### [Lightline](https://github.com/itchyny/lightline.vim)
 As the name implies it is a lightweight statusline plugin
+
+### [Surround](https://github.com/tpope/vim-surround)
+To deal with surrounding parentheses, brackets, quotes, tags etc.
+
+## Themes
+### [Jellybeans](https://github.com/nanotech/jellybeans.vim)
+Lovely dark theme. Main theme of this configuraiton
+
+### [Molokai](https://github.com/tomasr/molokai)
+For the sake of SublimeText...
