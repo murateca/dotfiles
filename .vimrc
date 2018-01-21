@@ -3,10 +3,8 @@ set runtimepath+=~/.vim
 
 "Auto commands
 autocmd!
-autocmd FileType nerdtree setlocal laststatus=0
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd FileType help wincmd L
-autocmd BufWinLeave * setlocal laststatus=2
 
 "----------------------------------------------------------
 "------------------------ vim-plug ------------------------
@@ -47,27 +45,65 @@ let g:lightline = {
 \	'active': {
 \		'left': [ 
 \			[ 'mode', 'paste' ],
-\           [  'absolutepath', 'readonly', 'modified' ],
+\           [  'filename'],
 \			],
 \		'right': [ 
 \			[ 'lineinfo' ],
 \           [ 'percent' ],
-\           [ 'filetype', 'fileencoding', 'fileformat', 'charvaluehex'] 
+\           [ 'filetype', 'fileencoding', 'fileformat'] 
 \			]
 \	},
 \	'tab': {
 \		'active': [ 'tabnum', 'filename', 'modified' ],
 \		'inactive': [ 'tabnum', 'filename', 'modified' ] 
 \	},
-\	'component': {
-\		'readonly': '%{&readonly?"\u26bf":""}',
-\		'modified': '%{&modified?"\u2630":""}',
-\		'charvaluehex': 'Hex:0x%B'
+\	'component_function': {
+\		'filename': 'LightlineFilename',
+\		'fileformat': 'LightlineFileformat',
+\		'filetype': 'LightlineFiletype',
+\		'fileencoding': 'LightlineFileencoding',
+\		'mode': 'LightlineMode',
+\		'readonly': 'LightlineReadonly',
+\		'modified': 'LightlineModified',
 \	},
 \	'separator': { 'left': '', 'right': '' },
 \	'subseparator': { 'left': '|', 'right': '|'}, 
-\	'colorscheme': 'default'
+\	'colorscheme': 'jellybeans'
 \}
+
+function! LightlineModified()
+  return &ft =~ 'help' ? '' : &modified ? "\u2630" : ''
+endfunction
+
+function! LightlineReadonly()
+  return &ft !~? 'help' && &readonly ? "\u26bf" : ''
+endfunction
+
+function! LightlineFilename()
+  let fname = expand('%:F')
+  return  fname =~ 'NERD_tree' ? '' :
+        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+endfunction
+
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'N/A') : ''
+endfunction
+
+function! LightlineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineMode()
+  let fname = expand('%:t')
+  return fname =~ 'NERD_tree' ? 'NERDTree' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
 
 "-Jellybeans
 colorscheme jellybeans
