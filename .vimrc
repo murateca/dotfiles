@@ -180,10 +180,10 @@ set noswapfile
 set fileformats=unix,dos,mac
 set showcmd
 
-"Run as Python3 code on Linux
-nnoremap <silent> <F5> :w<CR>:!clear;python3 %<CR>
+"Run as Python3 code#Linux
+"nnoremap <silent> <F5> :w<CR>:!clear;python3 %<CR>
 
-"Run as Python code on Windows
+"Run as Python code#Windows
 "nnoremap <silent> <F5> :w<CR>:!cls&python %<CR>
 
 "gvim settings
@@ -192,12 +192,12 @@ if has('gui_running')
 	highlight Normal guibg=black guifg=white
 	highlight LineNr guifg=grey
 	set background=dark
-	set guifont=Consolas
+	set guifont=Consolas:h10
 endif
 
-"Cursor settings
-au InsertEnter * silent execute "!echo -en \<esc>[5 q"
-au InsertLeave * silent execute "!echo -en \<esc>[2 q"
+"Cursor settings#Gnome Terminal
+"au InsertEnter * silent execute "!echo -en \<esc>[5 q"
+"au InsertLeave * silent execute "!echo -en \<esc>[2 q"
 
 
 "Mappings
