@@ -18,6 +18,8 @@ Plug 'itchyny/lightline.vim'
 
 Plug 'tpope/vim-surround'
 
+Plug 'tpope/vim-commentary'
+
 Plug 'nanotech/jellybeans.vim', { 'tag': 'v1.6' }
 
 Plug 'tomasr/molokai'
@@ -53,10 +55,6 @@ let g:lightline = {
 \           [ 'filetype', 'fileencoding', 'fileformat'] 
 \			]
 \	},
-\	'tab': {
-\		'active': [ 'tabnum', 'filename', 'modified' ],
-\		'inactive': [ 'tabnum', 'filename', 'modified' ] 
-\	},
 \	'component_function': {
 \		'filename': 'LightlineFilename',
 \		'fileformat': 'LightlineFileformat',
@@ -65,6 +63,15 @@ let g:lightline = {
 \		'mode': 'LightlineMode',
 \		'readonly': 'LightlineReadonly',
 \		'modified': 'LightlineModified',
+\	},
+\	'tab': {
+\		'active': [ 'tabnum', 'filename', 'modified', 'readonly' ],
+\		'inactive': [ 'tabnum', 'filename', 'modified', 'readonly' ] 
+\	},
+\	'tab_component_function': { 
+\		'filename': 'TablineFilename',
+\		'modified': 'TablineModified',
+\		'readonly': 'TablineReadonly',	
 \	},
 \	'separator': { 'left': '', 'right': '' },
 \	'subseparator': { 'left': '|', 'right': '|'}, 
@@ -105,8 +112,25 @@ function! LightlineMode()
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
+function! TablineModified(n)
+  let winnr = tabpagewinnr(a:n)
+  return gettabwinvar(a:n, winnr, '&modified') ? "\u26ab" : gettabwinvar(a:n, winnr, '&modifiable') ? '' : "\u26ca"
+endfunction
+
+function! TablineReadonly(n)
+ let winnr = tabpagewinnr(a:n)
+ return gettabwinvar(a:n, winnr, '&readonly') ? "\u26c9" : ''
+endfunction
+
+function! TablineFilename(n)
+ let buflist = tabpagebuflist(a:n)
+ let winnr = tabpagewinnr(a:n)
+ let tname = expand('#'.buflist[winnr - 1].':t')
+ return tname =~ 'NERD_tree' ? 'NERDTree' : tname !=# '' ? tname : '[No Name]'
+endfunction
+
 "-Jellybeans
-colorscheme jellybeans
+silent! colorscheme jellybeans
 
 "----------------------------------------------------------
 "----------------------------------------------------------
@@ -174,6 +198,7 @@ endif
 "Cursor settings
 au InsertEnter * silent execute "!echo -en \<esc>[5 q"
 au InsertLeave * silent execute "!echo -en \<esc>[2 q"
+
 
 "Mappings
 cno $h e ~/
