@@ -6,6 +6,20 @@ autocmd!
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd FileType help wincmd L
 
+"Commands
+command! AdjustEndOfLine execute '%s/\r\(\n\)/\1/g'
+command! ClearRegisters call ClearRegisters()
+
+"Functions
+function! ClearRegisters()
+  let regs='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-="*+'
+  let i=0
+  while (i<strlen(regs))
+      exec 'let @'.regs[i].'=""'
+      let i=i+1
+  endwhile
+endfunction
+
 "----------------------------------------------------------
 "------------------------ vim-plug ------------------------
 "----------------------------------------------------------
@@ -23,6 +37,10 @@ Plug 'tpope/vim-commentary'
 Plug 'nanotech/jellybeans.vim', { 'tag': 'v1.6' }
 
 Plug 'tomasr/molokai'
+
+Plug 'mattn/emmet-vim'
+
+Plug 'mhinz/vim-startify'
 
 call plug#end()
 
@@ -132,6 +150,12 @@ endfunction
 "-Jellybeans
 silent! colorscheme jellybeans
 
+"-Emmet
+let g:user_emmet_expandabbr_key = '<M-y>'
+
+"-Startify
+let g:startify_bookmarks = [ {'c': '~/.vimrc'} ]
+
 "----------------------------------------------------------
 "----------------------------------------------------------
 
@@ -167,7 +191,6 @@ set ttyfast
 filetype plugin indent on
 
 "Searching
-set hlsearch
 set incsearch
 set ignorecase
 set smartcase
