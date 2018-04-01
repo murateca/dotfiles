@@ -1,47 +1,6 @@
 "Runtime
 set runtimepath+=~/.vim
 
-"Auto commands
-autocmd!
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd FileType help wincmd L
-autocmd FileType html,css EmmetInstall | imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-"Cursor settings#Gnome Terminal
-au InsertEnter * silent execute "!echo -en \<esc>[5 q"
-au InsertLeave * silent execute "!echo -en \<esc>[2 q"
-
-"Commands
-command! AdjustEndOfLine execute '%s/\r\(\n\)/\1/g'
-command! ClearRegisters call ClearRegisters()
-command! Run call Run()
-
-"Mappings
-cno $h ~/
-nnoremap <silent> <F5> :w<CR>:call Run()<CR>
-
-"Functions
-function! ClearRegisters()
-  let regs='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-="*+'
-  let i=0
-  while (i<strlen(regs))
-      exec 'let @'.regs[i].'=""'
-      let i=i+1
-  endwhile
-endfunction
-
-function! Run()
-	call RunPython3OnLinux()
-endfunction
-
-"----------------------Run Functions-----------------------
-function! RunPython3OnLinux()
-	!clear;python3 %
-endfunction
-
-function! RunPythonOnWindows()
-	!cls;python %
-endfunction
-
 "----------------------------------------------------------
 "------------------------ vim-plug ------------------------
 "----------------------------------------------------------
@@ -54,6 +13,8 @@ Plug 'itchyny/lightline.vim'
 
 Plug 'mhinz/vim-startify'
 
+
+Plug 'tpope/vim-fugitive'
 
 Plug 'tpope/vim-surround'
 
@@ -75,9 +36,11 @@ call plug#end()
 "---Plugin Settings---
 "---------------------
 
+"-Colorsheme
+silent! colorscheme janah
+set background=dark
+
 "-Nerdtree
-map <silent> <C-n> :NERDTreeToggle<CR>
-map <silent> <F3> :NERDTreeFind<CR>
 let g:NERDTreeMapActivateNode="<F3>"
 let g:NERDTreeMapPreview="<F4>"
 let NERDTreeQuitOnOpen=1
@@ -93,7 +56,7 @@ let g:lightline = {
 \	'active': {
 \		'left': [ 
 \			[ 'mode', 'paste' ],
-\           [  'filename'],
+\           [  'fugitive', 'filename'],
 \			],
 \		'right': [ 
 \			[ 'lineinfo' ],
@@ -102,6 +65,7 @@ let g:lightline = {
 \			]
 \	},
 \	'component_function': {
+\		'fugitive': 'LightlineFugitive',
 \		'filename': 'LightlineFilename',
 \		'fileformat': 'LightlineFileformat',
 \		'filetype': 'LightlineFiletype',
@@ -123,6 +87,27 @@ let g:lightline = {
 \	'subseparator': { 'left': '|', 'right': '|'}, 
 \	'colorscheme': 'powerline'
 \}
+
+function! LightlineFugitive() abort
+  if &filetype ==# 'help'
+    return ''
+  endif
+  if has_key(b:, 'lightline_fugitive') && reltimestr(reltime(b:lightline_fugitive_)) =~# '^\s*0\.[0-5]'
+    return b:lightline_fugitive
+  endif
+  try
+    if exists('*fugitive#head')
+      let head = fugitive#head()
+    else
+      return ''
+    endif
+    let b:lightline_fugitive = head
+    let b:lightline_fugitive_ = reltime()
+    return b:lightline_fugitive
+  catch
+  endtry
+  return ''
+endfunction
 
 function! LightlineModified()
   return &ft =~ 'help' ? '' : &modified ? "\u2630" : ''
@@ -175,22 +160,70 @@ function! TablineFilename(n)
  return tname =~ 'NERD_tree' ? 'NERDTree' : tname !=# '' ? tname : '[No Name]'
 endfunction
 
-"-Colorsheme
-silent! colorscheme gruvbox
-autocmd ColorScheme jellybeans let g:lightline.colorscheme = 'jellybeans'
-autocmd ColorScheme janah highlight Normal ctermbg=235
-autocmd ColorScheme gruvbox let g:lightline.colorscheme = 'gruvbox'
-set background=dark
+"-Startify
+let g:startify_bookmarks = [ {'c': '~/.vimrc'} ]
 
 "-Emmet
 let g:user_emmet_install_global = 0
 let g:user_emmet_expandabbr_key='<Tab>'
 
-"-Startify
-let g:startify_bookmarks = [ {'c': '~/.vimrc'} ]
+"----------------------------------------------------------
+"----------------------------------------------------------
+"Auto commands
+autocmd!
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd FileType help wincmd L
+autocmd FileType html,css EmmetInstall | imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+autocmd ColorScheme jellybeans let g:lightline.colorscheme = 'jellybeans'
+autocmd ColorScheme janah highlight Normal ctermbg=235
+autocmd ColorScheme gruvbox let g:lightline.colorscheme = 'gruvbox'
+"Cursor settings#Gnome Terminal
+au InsertEnter * silent execute "!echo -en \<esc>[5 q"
+au InsertLeave * silent execute "!echo -en \<esc>[2 q"
 
-"----------------------------------------------------------
-"----------------------------------------------------------
+"Commands
+command! AdjustEndOfLine execute '%s/\r\(\n\)/\1/g'
+command! ClearRegisters call ClearRegisters()
+command! Run call Run()
+
+"Mappings
+cno $h ~/
+nnoremap <silent> <F5> :w<CR>:call Run()<CR>
+map <silent> <C-n> :NERDTreeToggle<CR>
+map <silent> <F3> :NERDTreeFind<CR>
+
+"Functions
+function! ClearRegisters()
+  let regs='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-="*+'
+  let i=0
+  while (i<strlen(regs))
+      exec 'let @'.regs[i].'=""'
+      let i=i+1
+  endwhile
+endfunction
+
+function! Run()
+	call RunPython3OnLinux()
+endfunction
+
+"-Run Functions---------------
+function! RunPython3OnLinux()
+	!clear;python3 %
+endfunction
+
+function! RunPythonOnWindows()
+	!cls;python %
+endfunction
+"-----------------------------
+
+"gvim settings
+if has('gui_running')
+	au GUIEnter * simalt ~x
+	highlight Normal guibg=black guifg=white
+	highlight LineNr guifg=grey
+	set background=dark
+	set guifont=Consolas:h11
+endif
 
 "Syntax
 syntax on
@@ -235,13 +268,4 @@ set noswapfile
 "Fileformat
 set fileformats=unix,dos,mac
 set showcmd
-
-"gvim settings
-if has('gui_running')
-	au GUIEnter * simalt ~x
-	highlight Normal guibg=black guifg=white
-	highlight LineNr guifg=grey
-	set background=dark
-	set guifont=Consolas:h11
-endif
 
