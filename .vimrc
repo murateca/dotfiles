@@ -5,10 +5,19 @@ set runtimepath+=~/.vim
 autocmd!
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd FileType help wincmd L
+autocmd FileType html,css EmmetInstall | imap <buffer> <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+"Cursor settings#Gnome Terminal
+au InsertEnter * silent execute "!echo -en \<esc>[5 q"
+au InsertLeave * silent execute "!echo -en \<esc>[2 q"
 
 "Commands
 command! AdjustEndOfLine execute '%s/\r\(\n\)/\1/g'
 command! ClearRegisters call ClearRegisters()
+command! Run call Run()
+
+"Mappings
+cno $h ~/
+nnoremap <silent> <F5> :w<CR>:call Run()<CR>
 
 "Functions
 function! ClearRegisters()
@@ -18,6 +27,19 @@ function! ClearRegisters()
       exec 'let @'.regs[i].'=""'
       let i=i+1
   endwhile
+endfunction
+
+function! Run()
+	call RunPython3OnLinux()
+endfunction
+
+"----------------------Run Functions-----------------------
+function! RunPython3OnLinux()
+	!clear;python3 %
+endfunction
+
+function! RunPythonOnWindows()
+	!cls;python %
 endfunction
 
 "----------------------------------------------------------
@@ -30,17 +52,23 @@ Plug 'scrooloose/nerdtree'
 
 Plug 'itchyny/lightline.vim'
 
+Plug 'mhinz/vim-startify'
+
+
 Plug 'tpope/vim-surround'
 
 Plug 'tpope/vim-commentary'
+
+Plug 'mattn/emmet-vim'
+
 
 Plug 'nanotech/jellybeans.vim', { 'tag': 'v1.6' }
 
 Plug 'tomasr/molokai'
 
-Plug 'mattn/emmet-vim'
+Plug 'mhinz/vim-janah'
 
-Plug 'mhinz/vim-startify'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 
@@ -93,7 +121,7 @@ let g:lightline = {
 \	},
 \	'separator': { 'left': '', 'right': '' },
 \	'subseparator': { 'left': '|', 'right': '|'}, 
-\	'colorscheme': 'jellybeans'
+\	'colorscheme': 'powerline'
 \}
 
 function! LightlineModified()
@@ -147,11 +175,16 @@ function! TablineFilename(n)
  return tname =~ 'NERD_tree' ? 'NERDTree' : tname !=# '' ? tname : '[No Name]'
 endfunction
 
-"-Jellybeans
-silent! colorscheme jellybeans
+"-Colorsheme
+silent! colorscheme gruvbox
+autocmd ColorScheme jellybeans let g:lightline.colorscheme = 'jellybeans'
+autocmd ColorScheme janah highlight Normal ctermbg=235
+autocmd ColorScheme gruvbox let g:lightline.colorscheme = 'gruvbox'
+set background=dark
 
 "-Emmet
-let g:user_emmet_expandabbr_key = '<M-y>'
+let g:user_emmet_install_global = 0
+let g:user_emmet_expandabbr_key='<Tab>'
 
 "-Startify
 let g:startify_bookmarks = [ {'c': '~/.vimrc'} ]
@@ -203,25 +236,12 @@ set noswapfile
 set fileformats=unix,dos,mac
 set showcmd
 
-"Run as Python3 code#Linux
-"nnoremap <silent> <F5> :w<CR>:!clear;python3 %<CR>
-
-"Run as Python code#Windows
-"nnoremap <silent> <F5> :w<CR>:!cls&python %<CR>
-
 "gvim settings
 if has('gui_running')
 	au GUIEnter * simalt ~x
 	highlight Normal guibg=black guifg=white
 	highlight LineNr guifg=grey
 	set background=dark
-	set guifont=Consolas:h10
+	set guifont=Consolas:h11
 endif
 
-"Cursor settings#Gnome Terminal
-"au InsertEnter * silent execute "!echo -en \<esc>[5 q"
-"au InsertLeave * silent execute "!echo -en \<esc>[2 q"
-
-
-"Mappings
-cno $h e ~/
