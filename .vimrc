@@ -53,16 +53,17 @@ let NERDTreeAutoDeleteBuffer = 1
 set laststatus=2
 set noshowmode
 let g:lightline = {
+\	'colorscheme': 'powerline',
 \	'active': {
 \		'left': [ 
 \			[ 'mode', 'paste' ],
-\           [  'fugitive', 'filename'],
-\			],
+\           [ 'fugitive', 'filename' ], 
+\		],
 \		'right': [ 
 \			[ 'lineinfo' ],
 \           [ 'percent' ],
 \           [ 'filetype', 'fileencoding', 'fileformat'] 
-\			]
+\		]
 \	},
 \	'component_function': {
 \		'fugitive': 'LightlineFugitive',
@@ -84,8 +85,7 @@ let g:lightline = {
 \		'readonly': 'TablineReadonly',	
 \	},
 \	'separator': { 'left': '', 'right': '' },
-\	'subseparator': { 'left': '|', 'right': '|'}, 
-\	'colorscheme': 'powerline'
+\	'subseparator': { 'left': '|', 'right': '|'}
 \}
 
 function! LightlineFugitive() abort
@@ -101,7 +101,7 @@ function! LightlineFugitive() abort
     else
       return ''
     endif
-    let b:lightline_fugitive = head
+    let b:lightline_fugitive = head !=# '' ? "\u26d5 ".head : ''
     let b:lightline_fugitive_ = reltime()
     return b:lightline_fugitive
   catch
