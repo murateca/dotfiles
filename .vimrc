@@ -57,12 +57,12 @@ let g:lightline = {
 \	'active': {
 \		'left': [ 
 \			[ 'mode', 'paste' ],
-\           		[ 'fugitive', 'filename' ], 
+\			[ 'fugitive', 'filename' ], 
 \		],
 \		'right': [ 
 \			[ 'lineinfo' ],
-\           		[ 'percent' ],
-\           		[ 'filetype', 'fileencoding', 'fileformat'] 
+\			[ 'percent' ],
+\			[ 'filetype', 'fileencoding', 'fileformat'] 
 \		]
 \	},
 \	'component_function': {
@@ -163,6 +163,8 @@ endfunction
 "-Startify
 let g:startify_bookmarks = [ {'c': '~/.vimrc'} ]
 
+
+
 "-Emmet
 let g:user_emmet_install_global = 0
 let g:user_emmet_expandabbr_key='<Tab>'
@@ -177,7 +179,7 @@ autocmd FileType html,css EmmetInstall | imap <buffer> <expr> <tab> emmet#expand
 autocmd ColorScheme jellybeans let g:lightline.colorscheme = 'jellybeans'
 autocmd ColorScheme janah highlight Normal ctermbg=235
 autocmd ColorScheme gruvbox let g:lightline.colorscheme = 'gruvbox'
-"Cursor settings#Gnome Terminal
+"-Cursor settings#Gnome Terminal
 au InsertEnter * silent execute "!echo -en \<esc>[5 q"
 au InsertLeave * silent execute "!echo -en \<esc>[2 q"
 
@@ -187,10 +189,18 @@ command! ClearRegisters call ClearRegisters()
 command! Run call Run()
 
 "Mappings
+"-Home
 cno $h ~/
+"-Run
 nnoremap <silent> <F5> :w<CR>:call Run()<CR>
+"-Nerdtree
 map <silent> <C-n> :NERDTreeToggle<CR>
 map <silent> <F3> :NERDTreeFind<CR>
+"-Navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 "Functions
 function! ClearRegisters()
@@ -268,4 +278,7 @@ set noswapfile
 "Fileformat
 set fileformats=unix,dos,mac
 set showcmd
+
+"Split
+set diffopt+=vertical
 
