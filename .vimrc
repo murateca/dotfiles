@@ -7,11 +7,19 @@ set runtimepath+=~/.vim
 
 call plug#begin('~/.vim/plugged')
 
+
 Plug 'scrooloose/nerdtree'
 
 Plug 'itchyny/lightline.vim'
 
 Plug 'mhinz/vim-startify'
+
+
+Plug 'lifepillar/vim-mucomplete'
+
+Plug 'Rip-Rip/clang_complete'
+
+Plug 'davidhalter/jedi-vim'
 
 
 Plug 'tpope/vim-fugitive'
@@ -22,6 +30,8 @@ Plug 'tpope/vim-commentary'
 
 Plug 'mattn/emmet-vim'
 
+Plug 'jiangmiao/auto-pairs'
+
 
 Plug 'nanotech/jellybeans.vim', { 'tag': 'v1.6' }
 
@@ -30,6 +40,7 @@ Plug 'tomasr/molokai'
 Plug 'mhinz/vim-janah'
 
 Plug 'morhetz/gruvbox'
+
 
 call plug#end()
 
@@ -163,7 +174,21 @@ endfunction
 "-Startify
 let g:startify_bookmarks = [ {'c': '~/.vimrc'} ]
 
-
+"-MUComplete
+set noinfercase
+set completeopt-=preview
+set completeopt+=menuone
+set completeopt+=noselect
+set completeopt+=noinsert
+set shortmess+=c
+let g:mucomplete#enable_auto_at_startup = 1
+"--Clang
+"libclang path depends on system so that one propably won't work
+"change it according to current os
+let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so'
+let g:clang_complete_auto = 1
+"--Jedi
+let g:jedi#popup_on_dot = 0
 
 "-Emmet
 let g:user_emmet_install_global = 0
@@ -201,6 +226,10 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+"-Autopair and MUComplete
+let g:AutoPairsMapCR = 0
+imap <Plug>MyCR <Plug>(MUcompleteCR)<Plug>AutoPairsReturn
+imap <cr> <Plug>MyCR
 
 "Functions
 function! ClearRegisters()
