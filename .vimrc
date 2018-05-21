@@ -17,10 +17,6 @@ Plug 'mhinz/vim-startify'
 
 Plug 'lifepillar/vim-mucomplete'
 
-Plug 'Rip-Rip/clang_complete'
-
-Plug 'davidhalter/jedi-vim'
-
 
 Plug 'tpope/vim-fugitive'
 
@@ -173,6 +169,7 @@ endfunction
 
 "-Startify
 let g:startify_bookmarks = [ {'c': '~/.vimrc'} ]
+let g:startify_custom_header = 'startify#fortune#books()'
 
 "-MUComplete
 set noinfercase
@@ -257,11 +254,15 @@ endfunction
 
 "gvim settings
 if has('gui_running')
-	au GUIEnter * simalt ~x
 	highlight Normal guibg=black guifg=white
 	highlight LineNr guifg=grey
 	set background=dark
-	set guifont=Consolas:h11
+	if has(win32) 
+		au GUIEnter * simalt ~x
+		set guifont=Consolas:h11
+	else
+		set guifont=Monospace:h11
+	endif
 endif
 
 "Syntax
@@ -273,7 +274,7 @@ set rnu
 highlight LineNr ctermfg=grey 
 
 "Esc delay off
-set timeoutlen=1000 ttimeoutlen=0
+"set timeoutlen=1000 ttimeoutlen=0
 
 "Tab Settings
 set tabstop=4
