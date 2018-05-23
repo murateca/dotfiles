@@ -11,4 +11,4 @@ mkdir -p $AUTOLOAD_PATH
 cp .vimrc $HOME
 vim +PlugInstall +qall
 
-\cp .vim/plugged/vim-startify/autoload/startify/fortune.vim $PLUGGED_PATH/vim-startify/autoload/startify/
+\cp .vim/startify/fortune.vim $PLUGGED_PATH/vim-startify/autoload/startify/
