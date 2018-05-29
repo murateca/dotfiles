@@ -257,7 +257,7 @@ if has('gui_running')
 	highlight Normal guibg=black guifg=white
 	highlight LineNr guifg=grey
 	set background=dark
-	if has(win32) 
+	if has('win32') 
 		au GUIEnter * simalt ~x
 		set guifont=Consolas:h11
 	else
