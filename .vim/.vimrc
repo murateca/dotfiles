@@ -223,10 +223,18 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-"-Autopair and MUComplete
-let g:AutoPairsMapCR = 0
-imap <Plug>MyCR <Plug>(MUcompleteCR)<Plug>AutoPairsReturn
-imap <cr> <Plug>MyCR
+
+"Compatibility
+"-MUComplete and Autopair
+let g:AutoPairsMapSpace = 0
+imap <silent> <expr> <space> pumvisible()
+		\ ? "<space>"
+		\ : "<c-r>=AutoPairsSpace()<cr>"
+if v:version < 801
+	let g:AutoPairsMapCR = 0
+	imap <Plug>MyCR <Plug>(MUcompleteCR)<Plug>AutoPairsReturn
+	imap <cr> <Plug>MyCR
+endif
 
 "Functions
 function! ClearRegisters()
@@ -274,7 +282,7 @@ set rnu
 highlight LineNr ctermfg=grey 
 
 "Esc delay off
-"set timeoutlen=1000 ttimeoutlen=0
+set timeoutlen=1000 ttimeoutlen=0
 
 "Tab Settings
 set tabstop=4
