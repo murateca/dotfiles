@@ -4,7 +4,7 @@
 [ -z "$PS1" ] && return
 
 #source bash_git
-source ~/.bash/.bash_git
+source ~/.bash.d/.bash_git
 
 #prompt
 export PS1='\[\e[1m\]\u\[\e[m\]\[\e[1;31m\]@\h\[\e[m\] \[\e[36m\]\w\[\e[m\]\[\e[33m\]$(__git_ps1)\[\e[m\] '

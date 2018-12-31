@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #Uninstalls bash, vim and git configuraitons. Restores backups
-rm -rf $HOME/.bash $HOME/.vim
+rm -rf $HOME/.bash.d $HOME/.vim.d
 rm $HOME/.bashrc $HOME/.bash_aliases $HOME/.vimrc $HOME/.gitconfig
 
 if [ -f $HOME/.bashrc.bak ]; then		#recover the backups

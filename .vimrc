@@ -1,11 +1,11 @@
 "Runtime
-set runtimepath+=~/.vim
+set runtimepath+=~/.vim.d
 
 "----------------------------------------------------------
 "------------------------ vim-plug ------------------------
 "----------------------------------------------------------
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.vim.d/plugged')
 
 
 Plug 'scrooloose/nerdtree'
