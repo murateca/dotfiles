@@ -179,13 +179,6 @@ set completeopt+=noselect
 set completeopt+=noinsert
 set shortmess+=c
 let g:mucomplete#enable_auto_at_startup = 1
-"--Clang
-"libclang path depends on system so that one propably won't work
-"change it according to current os
-let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so'
-let g:clang_complete_auto = 1
-"--Jedi
-let g:jedi#popup_on_dot = 0
 
 "-Emmet
 let g:user_emmet_install_global = 0
