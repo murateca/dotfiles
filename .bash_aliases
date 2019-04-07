@@ -1,4 +1,7 @@
 #bash aliases
+#apps
+alias svim='vim -u ~/.SpaceVim/vimrc'
+alias spacevim='gvim -u ~/.SpaceVim/vimrc'
 #ls
 alias ll='ls -alF'
 alias la='ls -A'
@@ -16,4 +19,3 @@ alias grubup='sudo update-grub'
 #general
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias cp='cp -i'
-
