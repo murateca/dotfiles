@@ -1,0 +1,50 @@
+[options]
+bootstrap_before = "config#before"
+bootstrap_after = "config#after"
+colorscheme = "jellybeans"
+colorscheme_bg = "dark"
+statusline_separator = "slant"
+statusline_inactive_separator = "slant"
+buffer_index_type = 4
+guifont = "Droid Sans Mono 11"
+windows_smartclose= ""
+enable_guicolors = true
+enable_tabline_filetype_icon = true
+enable_statusline_display_mode = false
+enable_language_specific_leader= 0
+enable_vimfiler_welcome = 0
+disabled_plugins = ["tern_for_vim", "vim-import-js"]
+
+[[layers]]
+name = "autocomplete"
+auto-completion-return-key-behavior = "complete"
+auto-completion-tab-key-behavior = "smart"
+
+[[layers]]
+name = "shell"
+default_position = "top"
+default_height = 30
+
+[[layers]]
+name = "colorscheme"
+
+[[layers]]
+name = "git"
+
+[[layers]]
+name = "lang#sh"
+
+[[layers]]
+name = "lang#vim"
+
+[[layers]]
+name = "lang#html"
+
+[[layers]]
+name = "lang#javascript"
+
+[[layers]]
+name = "lang#python"
+
+[[custom_plugins]]
+name = "cespare/vim-toml"
