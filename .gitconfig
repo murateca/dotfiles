@@ -24,8 +24,8 @@
 	st = status --short --branch
 	cp = cherry-pick
 	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --numstat
-	ld = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --date=short --graph
-	ldr = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --date=relative
+	lg = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --date=short --graph
+	lr = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --date=relative
 	un = reset HEAD
 [color]
 	ui = auto
