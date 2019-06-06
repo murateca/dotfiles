@@ -7,7 +7,7 @@
 source ~/.bash.d/.bash_git
 
 #prompt
-export PS1='\[\e[1m\]\u\[\e[m\]\[\e[1;31m\]@\h\[\e[m\] \[\e[36m\]\w\[\e[m\]\[\e[33m\]$(__git_ps1)\[\e[m\] '
+export PS1='\[\e[1m\]\u\[\e[m\]\[\e[1;31m\]@\h\[\e[m\] \[\e[36m\]\w\[\e[m\]\[\e[35m\]$(__git_ps1)\[\e[m\]\n\[\e[1;36m\]>\[\e[m\] '
 
 #enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
